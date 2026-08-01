@@ -10,7 +10,7 @@
    - FINAL_TEXT         (ending reveal, typed out before the title)
    ============================================================ */
 
-const PASSWORD = "sunshine"; // <-- change to her nickname (not case sensitive)
+const PASSWORD = "moti"; // <-- change to her nickname (not case sensitive)
 
 const VIDEO_ID = "LUgpPmj6nR8"; // Khat — Navjot Ahuja (official audio)
 
