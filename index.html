@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>The Hunt For My Heart</title>
+<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Caveat:wght@500;600;700&family=Nunito+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- ambient background layers, live for the whole experience -->
+<div class="bg-layer" aria-hidden="true">
+  <div class="stars"></div>
+  <div class="fireflies" id="fireflies"></div>
+  <canvas id="fx-canvas"></canvas>
+</div>
+
+<!-- sound toggle, always visible -->
+<button id="soundToggle" class="sound-toggle" aria-label="Toggle sound">🔈</button>
+
+<!-- progress bar, hidden during intro and final -->
+<div id="progressWrap" class="progress-wrap hidden">
+  <div class="progress-track"><div id="progressFill" class="progress-fill"></div></div>
+  <div id="progressLabel" class="progress-label">Level 1 / 10</div>
+</div>
+
+<main id="stage">
+
+  <!-- ============ INTRO ============ -->
+  <section class="screen active" id="screen-intro" data-screen="intro">
+    <div class="glass-card intro-card">
+      <div class="envelope" id="envelope">
+        <div class="envelope-back"></div>
+        <div class="envelope-letter">💌</div>
+        <div class="envelope-flap"></div>
+      </div>
+      <h1 class="title-xl">The Hunt For My Heart</h1>
+      <p class="subtitle">Someone left a treasure for you...<br>But only one person can find it.<br>I think that's you.</p>
+      <button class="btn-glow" id="startBtn">Start Adventure</button>
+    </div>
+  </section>
+
+  <!-- ============ LEVEL 1 — TREASURE MAP ============ -->
+  <section class="screen" id="screen-1" data-screen="1">
+    <div class="glass-card">
+      <h2 class="level-title">The Map</h2>
+      <div class="map-box">
+        <svg viewBox="0 0 400 240" class="map-svg">
+          <path id="mapPath" d="M 20 200 Q 100 40 200 120 T 380 40" fill="none" stroke="#caa26b" stroke-width="2" stroke-dasharray="6 6"/>
+          <circle cx="20" cy="200" r="5" fill="#f0b429"/>
+          <text x="20" y="222" class="map-label">start</text>
+          <circle cx="380" cy="40" r="6" fill="#f0b429" class="map-x"/>
+          <text x="355" y="30" class="map-label">heart ♥</text>
+          <g id="mapHeart">
+            <text x="0" y="0" font-size="20">❤️</text>
+          </g>
+        </svg>
+      </div>
+      <p class="level-text">Some treasures are hidden.<br>Mine was found the day I met you.</p>
+      <button class="btn-glow continue-btn" data-next="2">Continue</button>
+    </div>
+  </section>
+
+  <!-- ============ LEVEL 2 — HEART PUZZLE ============ -->
+  <section class="screen" id="screen-2" data-screen="2">
+    <div class="glass-card">
+      <h2 class="level-title">Fix My Heart</h2>
+      <p class="level-hint">Drag each piece into its place.</p>
+      <div class="puzzle-area" id="puzzleArea">
+        <div class="puzzle-slots" id="puzzleSlots">
+          <div class="slot" data-slot="0"></div>
+          <div class="slot" data-slot="1"></div>
+          <div class="slot" data-slot="2"></div>
+          <div class="slot" data-slot="3"></div>
+        </div>
+        <div class="puzzle-pieces" id="puzzlePieces">
+          <div class="piece" data-piece="0" style="--pc:#ff6b9d;">◤</div>
+          <div class="piece" data-piece="1" style="--pc:#f0b429;">◥</div>
+          <div class="piece" data-piece="2" style="--pc:#a276ff;">◣</div>
+          <div class="piece" data-piece="3" style="--pc:#6be0d6;">◢</div>
+        </div>
+      </div>
+      <p class="level-text success-text" id="puzzleSuccess">You fixed my heart ❤️</p>
+      <button class="btn-glow continue-btn hidden" data-next="3" id="puzzleContinue">Continue</button>
+    </div>
+  </section>
+
+  <!-- ============ LEVEL 3 — BALLOON GAME ============ -->
+  <section class="screen" id="screen-3" data-screen="3">
+    <div class="glass-card wide-card">
+      <h2 class="level-title">Pop Your Way to the Key</h2>
+      <p class="level-hint">One balloon holds a golden key. The rest hold something sweet.</p>
+      <div class="balloon-field" id="balloonField"></div>
+      <p class="level-text" id="balloonMsg">&nbsp;</p>
+      <button class="btn-glow continue-btn hidden" data-next="4" id="balloonContinue">Continue</button>
+    </div>
+  </section>
+
+  <!-- ============ LEVEL 4 — FIND THE STAR ============ -->
+  <section class="screen" id="screen-4" data-screen="4">
+    <div class="glass-card wide-card">
+      <h2 class="level-title">Find the Star</h2>
+      <p class="level-hint">One star out there shines brighter than the rest. Find it.</p>
+      <div class="sky-field" id="skyField"></div>
+      <p class="level-text success-text" id="starSuccess">You found it — here's your key 🔑</p>
+      <button class="btn-glow continue-btn hidden" data-next="5" id="starContinue">Continue</button>
+    </div>
+  </section>
+
+  <!-- ============ LEVEL 5 — POLAROID CAMERA ============ -->
+  <section class="screen" id="screen-5" data-screen="5">
+    <div class="glass-card">
+      <h2 class="level-title">Say Cheese</h2>
+      <div class="camera-box" id="cameraBox">
+        <div class="camera-icon">📷</div>
+        <button class="btn-glow" id="takePhotoBtn">Take Photo</button>
+      </div>
+      <div class="polaroid hidden" id="polaroid">
+        <div class="polaroid-photo"></div>
+        <p class="polaroid-caption" id="polaroidCaption"></p>
+      </div>
+      <button class="btn-glow continue-btn hidden" data-next="6" id="photoContinue">Continue</button>
+    </div>
+  </section>
+
+  <!-- ============ LEVEL 6 — PASSWORD LOCK ============ -->
+  <section class="screen" id="screen-6" data-screen="6">
+    <div class="glass-card">
+      <h2 class="level-title">One Lock, One Word</h2>
+      <p class="level-hint" id="lockHint">Hint: the nickname I call you.</p>
+      <div class="lock-box" id="lockBox">
+        <div class="lock-icon">🔒</div>
+        <input type="text" id="lockInput" class="lock-input" placeholder="type it here" autocomplete="off">
+        <button class="btn-glow" id="lockSubmit">Unlock</button>
+      </div>
+      <p class="lock-error hidden" id="lockError">Not quite — try again.</p>
+      <button class="btn-glow continue-btn hidden" data-next="7" id="lockContinue">Continue</button>
+    </div>
+  </section>
+
+  <!-- ============ LEVEL 7 — MUSIC ROOM ============ -->
+  <section class="screen" id="screen-7" data-screen="7">
+    <div class="glass-card wide-card">
+      <h2 class="level-title">Our Song</h2>
+      <div class="music-box">
+        <div class="music-player" id="musicPlayer"></div>
+        <div class="lyrics-panel" id="lyricsPanel"></div>
+      </div>
+      <button class="btn-glow continue-btn" data-next="8">Continue</button>
+    </div>
+  </section>
+
+  <!-- ============ LEVEL 8 — SECRET LETTER ============ -->
+  <section class="screen" id="screen-8" data-screen="8">
+    <div class="glass-card">
+      <h2 class="level-title">A Letter</h2>
+      <div class="letter-box" id="letterBox">
+        <p class="letter-text" id="letterText"></p>
+      </div>
+      <button class="btn-glow continue-btn hidden" data-next="9" id="letterContinue">Continue</button>
+    </div>
+  </section>
+
+  <!-- ============ LEVEL 9 — WHEEL OF LOVE ============ -->
+  <section class="screen" id="screen-9" data-screen="9">
+    <div class="glass-card">
+      <h2 class="level-title">Wheel of Love</h2>
+      <div class="wheel-area">
+        <div class="wheel-pointer">▼</div>
+        <div class="wheel" id="wheel"></div>
+      </div>
+      <button class="btn-glow" id="spinBtn">Spin</button>
+      <p class="level-text success-text hidden" id="wheelResult"></p>
+      <button class="btn-glow continue-btn hidden" data-next="10" id="wheelContinue">Continue</button>
+    </div>
+  </section>
+
+  <!-- ============ LEVEL 10 — TREASURE CHEST ============ -->
+  <section class="screen" id="screen-10" data-screen="10">
+    <div class="glass-card">
+      <h2 class="level-title">The Treasure</h2>
+      <p class="level-hint">Every key you found is about to matter.</p>
+      <div class="chest-area" id="chestArea">
+        <div class="keyring" id="keyring"></div>
+        <div class="chest" id="chest">
+          <div class="chest-lid"></div>
+          <div class="chest-base"></div>
+        </div>
+      </div>
+      <button class="btn-glow" id="openChestBtn">Open the Chest</button>
+    </div>
+  </section>
+
+  <!-- ============ FINAL ============ -->
+  <section class="screen" id="screen-final" data-screen="final">
+    <div class="glass-card final-card">
+      <p class="final-text" id="finalReveal"></p>
+      <h1 class="title-xl final-title hidden" id="finalTitle">Happy Girlfriend's Day ❤️</h1>
+      <button class="btn-glow hidden" id="restartBtn">Start Again</button>
+    </div>
+  </section>
+
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
