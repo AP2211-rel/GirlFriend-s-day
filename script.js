@@ -478,11 +478,10 @@ function buildWheel(){
     gradientParts.push(`${colors[i % colors.length]} ${start}deg ${end}deg`);
     const span = document.createElement('span');
     span.textContent = label;
-    const mid = start + sliceDeg/2;
-    // labels on the bottom half of the wheel would otherwise render upside down —
-    // flip them 180deg in place (around their own anchor point) so they stay readable
-    const needsFlip = mid > 90 && mid < 270;
-    span.style.transform = `rotate(${mid}deg) translate(60px, -6px)${needsFlip ? ' rotate(180deg)' : ''}`;
+  const mid = start + sliceDeg / 2;
+
+span.style.transform =
+`rotate(${mid}deg) translate(92px,-50%) rotate(-${mid}deg)`;
     wheel.appendChild(span);
   });
   wheel.style.background = `conic-gradient(${gradientParts.join(',')})`;
