@@ -4,7 +4,6 @@
    EDIT THESE VALUES to personalize the experience:
    - PASSWORD           (Level 6 — her nickname)
    - VIDEO_ID           (Level 7 — YouTube video id for "our song")
-   - LYRICS             (Level 7 — lines that type out under the player)
    - LETTER_TEXT        (Level 8 — the secret letter)
    - BALLOON_MESSAGES   (Level 3 — compliments / memories in balloons)
    - PHOTO_CAPTIONS     (Level 5 — caption(s) under the polaroid)
@@ -13,13 +12,7 @@
 
 const PASSWORD = "sunshine"; // <-- change to her nickname (not case sensitive)
 
-const VIDEO_ID = "dQw4w9WgXcQ"; // <-- swap for "your song" on YouTube
-
-const LYRICS = [
-  "this is the part where the chorus hits...",
-  "you know the line I always get wrong.",
-  "and somehow it's still our favorite song.",
-];
+const VIDEO_ID = "LUgpPmj6nR8"; // Khat — Navjot Ahuja (official audio)
 
 const LETTER_TEXT = `If you're reading this, you made it further than I thought you would today.
 
@@ -42,7 +35,7 @@ const BALLOON_MESSAGES = [
 ];
 
 const PHOTO_CAPTIONS = [
-  "you, on an ordinary Tuesday, being extraordinary",
+  "you, being effortlessly you",
 ];
 
 const FINAL_TEXT = `Congratulations.
@@ -444,23 +437,6 @@ function loadMusicRoom(){
   musicLoaded = true;
   const player = document.getElementById('musicPlayer');
   player.innerHTML = `<iframe src="https://www.youtube.com/embed/${VIDEO_ID}?autoplay=1&rel=0" title="our song" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
-
-  const panel = document.getElementById('lyricsPanel');
-  let lineIndex = 0;
-  function typeLine(){
-    const line = LYRICS[lineIndex % LYRICS.length];
-    let i = 0;
-    panel.textContent = '';
-    const typer = setInterval(() => {
-      panel.textContent += line[i];
-      i++;
-      if(i >= line.length){
-        clearInterval(typer);
-        setTimeout(() => { lineIndex++; typeLine(); }, 1800);
-      }
-    }, 45);
-  }
-  typeLine();
 }
 
 /* ============================================================
@@ -503,7 +479,10 @@ function buildWheel(){
     const span = document.createElement('span');
     span.textContent = label;
     const mid = start + sliceDeg/2;
-    span.style.transform = `rotate(${mid}deg) translate(60px, -6px)`;
+    // labels on the bottom half of the wheel would otherwise render upside down —
+    // flip them 180deg in place (around their own anchor point) so they stay readable
+    const needsFlip = mid > 90 && mid < 270;
+    span.style.transform = `rotate(${mid}deg) translate(60px, -6px)${needsFlip ? ' rotate(180deg)' : ''}`;
     wheel.appendChild(span);
   });
   wheel.style.background = `conic-gradient(${gradientParts.join(',')})`;
