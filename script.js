@@ -478,10 +478,24 @@ function buildWheel(){
     gradientParts.push(`${colors[i % colors.length]} ${start}deg ${end}deg`);
     const span = document.createElement('span');
     span.textContent = label;
-  const mid = start + sliceDeg / 2;
+ const mid = start + sliceDeg / 2;
 
-span.style.transform =
-`rotate(${mid}deg) translate(92px,-50%) rotate(-${mid}deg)`;
+const radius = 95;
+
+const angle = (mid - 90) * Math.PI / 180;
+
+const x = Math.cos(angle) * radius;
+const y = Math.sin(angle) * radius;
+
+span.style.left = `calc(50% + ${x}px)`;
+span.style.top = `calc(50% + ${y}px)`;
+
+span.style.transform = "translate(-50%, -50%)";
+
+span.style.fontSize = "18px";
+span.style.fontWeight = "700";
+span.style.textAlign = "center";
+span.style.whiteSpace = "nowrap";
     wheel.appendChild(span);
   });
   wheel.style.background = `conic-gradient(${gradientParts.join(',')})`;
