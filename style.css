@@ -272,8 +272,7 @@ button:focus-visible, input:focus-visible, [tabindex]:focus-visible{
 }
 @keyframes develop{ from{ opacity:0; transform: translateY(-10px) rotate(-2deg) scale(.9);} to{ opacity:1; transform: rotate(-2deg) scale(1);} }
 .polaroid-photo{
-  width:100%; height:170px; border-radius:2px;
-  background: linear-gradient(135deg, var(--rose), var(--violet), var(--gold));
+  width:100%; height:170px; object-fit:cover; border-radius:2px; display:block;
   filter: grayscale(1) brightness(.6);
   animation: colorize 2s ease 0.3s forwards;
 }
@@ -299,10 +298,6 @@ button:focus-visible, input:focus-visible, [tabindex]:focus-visible{
 .music-box{ display:flex; flex-direction:column; gap:20px; margin: 10px 0 20px; }
 .music-player{ border-radius:12px; overflow:hidden; background:#000; }
 .music-player iframe{ width:100%; aspect-ratio:16/9; display:block; border:0; }
-.lyrics-panel{
-  min-height: 70px; font-family: var(--font-hand); font-size:1.4rem; color: var(--gold-soft);
-  text-align:center; padding: 10px;
-}
 
 /* ============ LEVEL 8 — LETTER ============ */
 .letter-box{
