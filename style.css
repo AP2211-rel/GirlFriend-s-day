@@ -3,6 +3,7 @@
    Design system: dark romantic + treasure-hunt gold, glassmorphism
    ============================================================ */
 
+
 :root{
   /* palette */
   --void: #0f0a1a;
@@ -266,13 +267,19 @@ button:focus-visible, input:focus-visible, [tabindex]:focus-visible{
 .flash-overlay.flashing{ animation: flash .5s ease; }
 @keyframes flash{ 0%{opacity:0;} 15%{opacity:1;} 100%{opacity:0;} }
 .polaroid{
-  margin: 20px auto 0; width: 220px; background: var(--parchment); padding: 14px 14px 22px;
+  margin: 20px auto 0; width: 300px; background: var(--parchment); padding: 14px 14px 22px;
   border-radius: 4px; box-shadow: 0 12px 30px rgba(0,0,0,0.4);
   animation: develop 1.8s ease both;
 }
 @keyframes develop{ from{ opacity:0; transform: translateY(-10px) rotate(-2deg) scale(.9);} to{ opacity:1; transform: rotate(-2deg) scale(1);} }
 .polaroid-photo{
-  width:100%; height:170px; object-fit:cover; border-radius:2px; display:block;
+  width:100%;
+  height:260px;
+  object-fit:contain;
+  object-position:center;
+  display:block;
+  background:#d9d9d9;
+  border-radius:4px;
   filter: grayscale(1) brightness(.6);
   animation: colorize 2s ease 0.3s forwards;
 }
@@ -323,8 +330,16 @@ button:focus-visible, input:focus-visible, [tabindex]:focus-visible{
   box-shadow: 0 0 40px rgba(240,180,41,0.3);
 }
 .wheel span{
-  position:absolute; top:50%; left:50%; transform-origin:0 0; font-size:.72rem;
-  font-weight:700; color: var(--void); white-space:nowrap;
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform-origin:0 0;
+  font-size:18px;
+  font-weight:800;
+  font-family:var(--font-body);
+  color:#1b1327;
+  white-space:nowrap;
+  text-shadow:0 1px 2px rgba(255,255,255,.5);
 }
 
 /* ============ LEVEL 10 — CHEST ============ */
