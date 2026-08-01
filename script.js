@@ -313,8 +313,14 @@ document.querySelectorAll('.continue-btn').forEach(btn => {
     if(keyFound) return;
     const b = document.createElement('div');
     b.className = 'balloon';
-    const isKey = !hasActiveKey && Math.random() < 0.15;
-    if(isKey){ hasActiveKey = true; b.dataset.key = 'true'; }
+    // guarantee a key balloon is (almost) always somewhere on screen:
+    // as soon as there isn't one active, the next balloon spawned becomes it
+    const isKey = !hasActiveKey;
+    if(isKey){
+      hasActiveKey = true;
+      b.dataset.key = 'true';
+      b.classList.add('key-glimmer');
+    }
     b.style.left = `${5 + Math.random()*85}%`;
     b.style.background = colors[Math.floor(Math.random()*colors.length)];
     b.style.setProperty('--drift', `${(Math.random()*60 - 30)}px`);
