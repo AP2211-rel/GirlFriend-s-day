@@ -225,6 +225,13 @@ button:focus-visible, input:focus-visible, [tabindex]:focus-visible{
   background: rgba(255,255,255,0.4); transform: translateX(-50%);
 }
 .balloon.popped{ animation: pop-out .3s ease forwards; pointer-events:none; }
+.balloon.key-glimmer{ position:absolute; } /* inherited already, kept explicit for the ::before */
+.balloon.key-glimmer::before{
+  content:''; position:absolute; inset:-7px; border-radius:50%;
+  box-shadow: 0 0 18px 6px rgba(240,180,41,0.65);
+  animation: key-glow-pulse 1.4s ease-in-out infinite; /* own duration, unaffected by the balloon's rise-speed */
+}
+@keyframes key-glow-pulse{ 0%,100%{ opacity:.25; } 50%{ opacity:1; } }
 @keyframes pop-out{ to{ transform: scale(1.6); opacity:0; } }
 @keyframes rise{
   from{ transform: translateY(0) translateX(0); }
